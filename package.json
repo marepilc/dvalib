@@ -1,6 +1,6 @@
 {
   "name": "dvalib",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "repository": "https://github.com/marepilc/dvalib.git",
   "publishConfig": {
     "access": "public"
@@ -25,6 +25,10 @@
   "author": "Marek Pilczuk",
   "license": "MIT",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "@typescript-eslint/parser": "^6.4.0",
+    "eslint": "^8.47.0",
+    "prettier": "3.0.2",
     "typedoc": "^0.24.8",
     "typescript": "^5.1.6"
   },

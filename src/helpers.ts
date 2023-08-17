@@ -1,11 +1,10 @@
 'use strict'
 
-
-import {constrain, PI, round} from "./math";
-import {dva} from "./main";
+import { constrain, PI, round } from './math'
+import { dva } from './main'
 
 export function number2str(x: number, radix: number = 10): string {
-    return x.toString(radix)
+  return x.toString(radix)
 }
 
 /**
@@ -14,15 +13,15 @@ export function number2str(x: number, radix: number = 10): string {
  * @param sep String used as a separator.
  */
 export function thousandSep(v: number, sep: string): string {
-    let s: string = number2str(v)
-    let st: string[] = s.split('.')
-    let st1 = st[0]
-    let st2 = st.length > 1 ? '.' + st[1] : ''
-    let rgx: RegExp = /(\d+)(\d{3})/
-    while (rgx.test(st1)) {
-        st1 = st1.replace(rgx, '$1' + sep + '$2')
-    }
-    return st1 + st2
+  const s: string = number2str(v)
+  const st: string[] = s.split('.')
+  let st1 = st[0]
+  const st2 = st.length > 1 ? '.' + st[1] : ''
+  const rgx: RegExp = /(\d+)(\d{3})/
+  while (rgx.test(st1)) {
+    st1 = st1.replace(rgx, '$1' + sep + '$2')
+  }
+  return st1 + st2
 }
 
 /**
@@ -30,7 +29,7 @@ export function thousandSep(v: number, sep: string): string {
  * @param a Angle in degrees
  */
 export function deg2rad(a: number): number {
-    return a * PI / 180
+  return (a * PI) / 180
 }
 
 /**
@@ -39,20 +38,20 @@ export function deg2rad(a: number): number {
  * @param radix Base in mathematical numeral systems (between 2 and 36.)
  */
 export function int(s: string, radix: number = 10): number {
-    return parseInt(s, radix)
+  return parseInt(s, radix)
 }
 
 /**
  * Alias of the `String` constructor.
  */
-export let str: StringConstructor = String
+export const str: StringConstructor = String
 
 /**
  * This function converts millimeters to pixels.
  * @param v Value in mm.
  */
 export function mm2px(v: number): number {
-    return round(dva.dpi * v / 25.4)
+  return round((dva.dpi * v) / 25.4)
 }
 
 /**
@@ -60,7 +59,7 @@ export function mm2px(v: number): number {
  * @param v Value in pixels.
  */
 export function px2mm(v: number): number {
-    return round(v * 25.4 / dva.dpi * 10) / 10
+  return round(((v * 25.4) / dva.dpi) * 10) / 10
 }
 
 /**
@@ -68,9 +67,9 @@ export function px2mm(v: number): number {
  * @param v Number between `0` and `255`.
  */
 export function hexStr(v: number): string {
-    if (constrain(v, 0, 255).toString(16).length == 1) {
-        return 0 + constrain(v, 0, 255).toString(16)
-    } else {
-        return constrain(v, 0, 255).toString(16)
-    }
+  if (constrain(v, 0, 255).toString(16).length == 1) {
+    return 0 + constrain(v, 0, 255).toString(16)
+  } else {
+    return constrain(v, 0, 255).toString(16)
+  }
 }

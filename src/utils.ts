@@ -1,17 +1,16 @@
 'use strict'
 
-
 /**
  * his function, if called with arguments, is an alias of `console.log`.
  * Without arguments, is an alias of `window.print`.
  * @param items
  */
 export function print(...items: any) {
-    if (items.length != 0) {
-        console.log(...items)
-    } else {
-        window.print()
-    }
+  if (items.length != 0) {
+    console.log(...items)
+  } else {
+    window.print()
+  }
 }
 
 /**
@@ -43,8 +42,8 @@ export function print(...items: any) {
  * @param svg
  */
 export function svg2img(svg: string): HTMLImageElement {
-    let img = new Image()
-    let blob = new Blob([svg], {type: 'image/svg+xml'})
-    img.src = URL.createObjectURL(blob)
-    return img
+  const img = new Image()
+  const blob = new Blob([svg], { type: 'image/svg+xml' })
+  img.src = URL.createObjectURL(blob)
+  return img
 }

@@ -1,9 +1,7 @@
 'use strict'
 
-
-import {HALF_PI, PI, max} from './math';
-import {dva, restore, save, LengthUnit} from './main'
-
+import { HALF_PI, PI, max } from './math'
+import { dva, restore, save, LengthUnit } from './main'
 
 /**
  * This function place a text on the canvas.
@@ -12,14 +10,14 @@ import {dva, restore, save, LengthUnit} from './main'
  * @param y Y coordinate of the text's anchor point.
  */
 export function text(text: string, x: number, y: number): void {
-    let lines = text.split('\n')
-    let lineY = y
-    if (!!dva.ctx) {
-        for (let i = 0; i < lines.length; i++) {
-            dva.ctx.fillText(lines[i], x, lineY)
-            lineY += dva.fontSize * dva.lineHeight
-        }
+  const lines = text.split('\n')
+  let lineY = y
+  if (dva.ctx) {
+    for (let i = 0; i < lines.length; i++) {
+      dva.ctx.fillText(lines[i], x, lineY)
+      lineY += dva.fontSize * dva.lineHeight
     }
+  }
 }
 
 /**
@@ -28,14 +26,14 @@ export function text(text: string, x: number, y: number): void {
  * @param size Font size.
  */
 export function fontSize(size?: number): void | number {
-    if (size != undefined) {
-        dva.fontSize = size
-        if (!!dva.ctx) {
-            setFont()
-        }
-    } else {
-        return dva.fontSize
+  if (size != undefined) {
+    dva.fontSize = size
+    if (dva.ctx) {
+      setFont()
     }
+  } else {
+    return dva.fontSize
+  }
 }
 
 /**
@@ -43,9 +41,9 @@ export function fontSize(size?: number): void | number {
  * @param unit
  */
 export function fontUnit(unit: LengthUnit): void {
-    if (!!dva) {
-        dva.fontUnit = unit
-    }
+  if (dva) {
+    dva.fontUnit = unit
+  }
 }
 
 /**
@@ -53,11 +51,11 @@ export function fontUnit(unit: LengthUnit): void {
  * @param text
  */
 export function textWidth(text: string): number {
-    if (!!dva.ctx) {
-        return dva.ctx.measureText(text).width
-    } else {
-        return 0
-    }
+  if (dva.ctx) {
+    return dva.ctx.measureText(text).width
+  } else {
+    return 0
+  }
 }
 
 /**
@@ -65,23 +63,23 @@ export function textWidth(text: string): number {
  * @param text
  */
 export function textDim(text: string): {
-    w: number,
-    h: number
+  w: number
+  h: number
 } {
-    let lines = text.split('\n')
-    let wSize = 0
-    let hSize = 0
-    if (!!dva.ctx) {
-        for (let i = 0; i < lines.length; i++) {
-            wSize = max([wSize, dva.ctx.measureText(lines[i]).width])
-            hSize += dva.fontSize * dva.lineHeight
-        }
+  const lines = text.split('\n')
+  let wSize = 0
+  let hSize = 0
+  if (dva.ctx) {
+    for (let i = 0; i < lines.length; i++) {
+      wSize = max([wSize, dva.ctx.measureText(lines[i]).width])
+      hSize += dva.fontSize * dva.lineHeight
     }
-    hSize = hSize - (dva.fontSize * dva.lineHeight - dva.fontSize)
-    return {
-        w: wSize,
-        h: hSize
-    };
+  }
+  hSize = hSize - (dva.fontSize * dva.lineHeight - dva.fontSize)
+  return {
+    w: wSize,
+    h: hSize,
+  }
 }
 
 export type TextAlign = 'left' | 'right' | 'center' | 'start' | 'end'
@@ -92,7 +90,7 @@ export type TextBaseline = 'top' | 'middle' | 'alphabetic' | 'hanging' | 'ideogr
  * @param alignment
  */
 export function textAlign(alignment: TextAlign): void {
-    if (!!dva.ctx) dva.ctx.textAlign = alignment
+  if (dva.ctx) dva.ctx.textAlign = alignment
 }
 
 /**
@@ -100,16 +98,16 @@ export function textAlign(alignment: TextAlign): void {
  * @param baseline
  */
 export function textBaseline(baseline: TextBaseline): void {
-    if (!!dva.ctx) dva.ctx.textBaseline = baseline
+  if (dva.ctx) dva.ctx.textBaseline = baseline
 }
 
 /**
  * @ignore
  */
 export function setFont(): void {
-    if (!!dva.ctx) {
-        dva.ctx.font = `${dva.fontStyle} ${dva.fontWeight} ${dva.fontSize}${dva.fontUnit} ${dva.fontFamily}`
-    }
+  if (dva.ctx) {
+    dva.ctx.font = `${dva.fontStyle} ${dva.fontWeight} ${dva.fontSize}${dva.fontUnit} ${dva.fontFamily}`
+  }
 }
 
 /**
@@ -117,14 +115,14 @@ export function setFont(): void {
  * @param style
  */
 export function fontStyle(style?: string): void | string {
-    if (style) {
-        dva.fontStyle = style
-        if (!!dva.ctx) {
-            setFont()
-        }
-    } else {
-        return dva.fontStyle
+  if (style) {
+    dva.fontStyle = style
+    if (dva.ctx) {
+      setFont()
     }
+  } else {
+    return dva.fontStyle
+  }
 }
 
 /**
@@ -133,14 +131,14 @@ export function fontStyle(style?: string): void | string {
  * @param weight
  */
 export function fontWeight(weight?: string): void | string {
-    if (weight) {
-        dva.fontWeight = weight
-        if (!!dva.ctx) {
-            setFont()
-        }
-    } else {
-        return dva.fontWeight
+  if (weight) {
+    dva.fontWeight = weight
+    if (dva.ctx) {
+      setFont()
     }
+  } else {
+    return dva.fontWeight
+  }
 }
 
 /**
@@ -149,14 +147,14 @@ export function fontWeight(weight?: string): void | string {
  * @param family
  */
 export function fontFamily(family?: string): void | string {
-    if (family) {
-        dva.fontFamily = family
-        if (!!dva.ctx) {
-            setFont()
-        }
-    } else {
-        return dva.fontFamily
+  if (family) {
+    dva.fontFamily = family
+    if (dva.ctx) {
+      setFont()
     }
+  } else {
+    return dva.fontFamily
+  }
 }
 
 /**
@@ -165,11 +163,11 @@ export function fontFamily(family?: string): void | string {
  * @param height
  */
 export function lineHeight(height?: number): void | number {
-    if (height != undefined) {
-        dva.lineHeight = height
-    } else {
-        return dva.lineHeight
-    }
+  if (height != undefined) {
+    dva.lineHeight = height
+  } else {
+    return dva.lineHeight
+  }
 }
 
 /**
@@ -184,42 +182,52 @@ export function lineHeight(height?: number): void | number {
  * @param inward Defines text direction (default `true`.)
  * @param kerning Defines text kerning (default `0`.)
  */
-export function textOnArc(text: string, x: number, y: number, r: number, startAngle: number,
-                          align: TextAlign = 'center', outside: boolean = true,
-                          inward: boolean = true, kerning: number = 0): number {
-    if (!!dva.ctx) {
-        let clockwise = (align === 'left') ? 1 : -1 // draw clockwise if right. Else counterclockwise
-        if (!outside) r -= dva.fontSize
-        if (((align === 'center' || align === 'right') && inward) ||
-            (align === 'left' && !inward)) text = text.split('').reverse().join('')
-        save()
-        dva.ctx.translate(x, y)
-        let _startAngle = startAngle
-        startAngle += HALF_PI
-        if (!inward) startAngle += PI
-        dva.ctx.textBaseline = 'middle'
-        dva.ctx.textAlign = 'center'
-        if (align === 'center') {
-            for (let i = 0; i < text.length; i++) {
-                let charWidth = dva.ctx.measureText(text[i]).width
-                startAngle += ((charWidth + (i === text.length - 1 ? 0 : kerning)) /
-                    (r - dva.fontSize)) / 2 * -clockwise
-            }
-        }
-        let tempAngle = 0
-        dva.ctx.rotate(startAngle)
-        for (let i = 0; i < text.length; i++) {
-            let charWidth = dva.ctx.measureText(text[i]).width
-            dva.ctx.rotate((charWidth / 2) / (r - dva.fontSize) * clockwise)
-            dva.ctx.fillText(text[i], 0, (inward ? 1 : -1) * (0 - r + dva.fontSize / 2))
-
-            dva.ctx.rotate((charWidth / 2 + kerning) / (r - dva.fontSize) * clockwise)
-            tempAngle += ((charWidth / 2) / (r - dva.fontSize) * clockwise) +
-                ((charWidth / 2 + kerning) / (r - dva.fontSize) * clockwise)
-        }
-        restore()
-        return _startAngle + tempAngle
-    } else {
-        return 0
+export function textOnArc(
+  text: string,
+  x: number,
+  y: number,
+  r: number,
+  startAngle: number,
+  align: TextAlign = 'center',
+  outside: boolean = true,
+  inward: boolean = true,
+  kerning: number = 0
+): number {
+  if (dva.ctx) {
+    const clockwise = align === 'left' ? 1 : -1 // draw clockwise if right. Else counterclockwise
+    if (!outside) r -= dva.fontSize
+    if (((align === 'center' || align === 'right') && inward) || (align === 'left' && !inward))
+      text = text.split('').reverse().join('')
+    save()
+    dva.ctx.translate(x, y)
+    const _startAngle = startAngle
+    startAngle += HALF_PI
+    if (!inward) startAngle += PI
+    dva.ctx.textBaseline = 'middle'
+    dva.ctx.textAlign = 'center'
+    if (align === 'center') {
+      for (let i = 0; i < text.length; i++) {
+        const charWidth = dva.ctx.measureText(text[i]).width
+        startAngle +=
+          ((charWidth + (i === text.length - 1 ? 0 : kerning)) / (r - dva.fontSize) / 2) *
+          -clockwise
+      }
     }
+    let tempAngle = 0
+    dva.ctx.rotate(startAngle)
+    for (let i = 0; i < text.length; i++) {
+      const charWidth = dva.ctx.measureText(text[i]).width
+      dva.ctx.rotate((charWidth / 2 / (r - dva.fontSize)) * clockwise)
+      dva.ctx.fillText(text[i], 0, (inward ? 1 : -1) * (0 - r + dva.fontSize / 2))
+
+      dva.ctx.rotate(((charWidth / 2 + kerning) / (r - dva.fontSize)) * clockwise)
+      tempAngle +=
+        (charWidth / 2 / (r - dva.fontSize)) * clockwise +
+        ((charWidth / 2 + kerning) / (r - dva.fontSize)) * clockwise
+    }
+    restore()
+    return _startAngle + tempAngle
+  } else {
+    return 0
+  }
 }

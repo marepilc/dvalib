@@ -1,9 +1,8 @@
-'use strict';
+'use strict'
 
-
-import {preloader, AssetsObject, assetList} from './assets'
-import {round, floor, abs, Vector} from './math'
-import {setFont} from './typography'
+import { preloader, AssetsObject, assetList } from './assets'
+import { round, floor, abs, Vector } from './math'
+import { setFont } from './typography'
 
 /**
  * The `Keyboard` class is used for user interaction with the keyboard.
@@ -27,7 +26,7 @@ import {setFont} from './typography'
  *     textAlign,
  *     textBaseline,
  *     width
- * } from 'limeviz'
+ * } from 'main'
  *
  * dvaStart(setup, draw)
  *
@@ -56,71 +55,71 @@ import {setFont} from './typography'
  * ```
  */
 export class Keyboard {
-    /**
-     * Returns `true` if any key is pressed.
-     */
-    public keyIsPressed: boolean
-    /**
-     * Returns `true` if *Alt* is pressed.
-     */
-    public altIsPressed: boolean
-    /**
-     * Returns `true` if *Shift* is pressed.
-     */
-    public shiftIsPressed: boolean
-    /**
-     * Returns `true` if *Ctrl* is pressed.
-     */
-    public ctrlIsPressed: boolean
-    /**
-     * Returns currently pressed key or `null` if no key is pressed.
-     */
-    public keyPressed: string | null
-    /**
-     * This function may be defined by user
-     */
-    public keyDown: ((key: string) => void) | null
-    /**
-     * This function may be defined by user
-     */
-    public keyUp: ((key: string) => void) | null
-    private _canvas: HTMLCanvasElement
+  /**
+   * Returns `true` if any key is pressed.
+   */
+  public keyIsPressed: boolean
+  /**
+   * Returns `true` if *Alt* is pressed.
+   */
+  public altIsPressed: boolean
+  /**
+   * Returns `true` if *Shift* is pressed.
+   */
+  public shiftIsPressed: boolean
+  /**
+   * Returns `true` if *Ctrl* is pressed.
+   */
+  public ctrlIsPressed: boolean
+  /**
+   * Returns currently pressed key or `null` if no key is pressed.
+   */
+  public keyPressed: string | null
+  /**
+   * This function may be defined by user
+   */
+  public keyDown: ((key: string) => void) | null
+  /**
+   * This function may be defined by user
+   */
+  public keyUp: ((key: string) => void) | null
+  private _canvas: HTMLCanvasElement
 
-    /**
-     *
-     * @param canvas HTML5 Canvas element with the visualization.
-     */
-    constructor(canvas: HTMLCanvasElement) {
-        this._canvas = canvas
-        this.keyIsPressed = false
-        this.altIsPressed = false
-        this.shiftIsPressed = false
-        this.ctrlIsPressed = false
-        this.keyPressed = null
-        this.keyDown = null
-        this.keyUp = null
-        this._canvas.tabIndex = 1; // to make it focusable
-        this._canvas.addEventListener('keydown', (e: KeyboardEvent) => {
-            this.keyIsPressed = true
-            if (e.key === 'Alt') this.altIsPressed = true
-            if (e.key === 'Shift') this.shiftIsPressed = true
-            if (e.key === 'Control') this.ctrlIsPressed = true
-            this.keyPressed = e.key
-            if (this.keyDown != null) {
-                this.keyDown(e.key)
-            }
-        })
-        this._canvas.addEventListener('keyup', (e: KeyboardEvent) => {
-            this.keyIsPressed = false
-            if (e.key === 'Alt') this.altIsPressed = false
-            if (e.key === 'Shift') this.shiftIsPressed = false
-            if (e.key === 'Control') this.ctrlIsPressed = false
-            this.keyPressed = null
-            if (this.keyUp != null) {
-                this.keyUp(e.key)
-            }
-        })
-    }
+  /**
+   *
+   * @param canvas HTML5 Canvas element with the visualization.
+   */
+  constructor(canvas: HTMLCanvasElement) {
+    this._canvas = canvas
+    this.keyIsPressed = false
+    this.altIsPressed = false
+    this.shiftIsPressed = false
+    this.ctrlIsPressed = false
+    this.keyPressed = null
+    this.keyDown = null
+    this.keyUp = null
+    this._canvas.tabIndex = 1 // to make it focusable
+    this._canvas.addEventListener('keydown', (e: KeyboardEvent) => {
+      this.keyIsPressed = true
+      if (e.key === 'Alt') this.altIsPressed = true
+      if (e.key === 'Shift') this.shiftIsPressed = true
+      if (e.key === 'Control') this.ctrlIsPressed = true
+      this.keyPressed = e.key
+      if (this.keyDown != null) {
+        this.keyDown(e.key)
+      }
+    })
+    this._canvas.addEventListener('keyup', (e: KeyboardEvent) => {
+      this.keyIsPressed = false
+      if (e.key === 'Alt') this.altIsPressed = false
+      if (e.key === 'Shift') this.shiftIsPressed = false
+      if (e.key === 'Control') this.ctrlIsPressed = false
+      this.keyPressed = null
+      if (this.keyUp != null) {
+        this.keyUp(e.key)
+      }
+    })
+  }
 }
 
 /**
@@ -130,160 +129,177 @@ export class Keyboard {
  * to create any additional instance.
  */
 export class Mouse {
-    private _canvas: HTMLCanvasElement
-    private _x: number
-    private _y: number
-    private _px: number
-    private _py: number
-    private readonly _pos: Vector
-    private readonly _ppos: Vector
-    /**
-     * Returns `true` if any of the mouse buttons is pressed.
-     */
-    public isPressed: boolean
-    /**
-     *  Returns button number.
-     */
-    public button: number | null
-    /**
-     * This function may be defined by user
-     */
-    public wheel: ((e: WheelEvent) => void) | null
-    /**
-     * This function may be defined by user
-     */
-    public down: ((e: MouseEvent) => void) | null
-    /**
-     * This function may be defined by user
-     */
-    public up: ((e: MouseEvent) => void) | null
-    /**
-     * This function may be defined by user
-     */
-    public click: ((e: MouseEvent) => void) | null
-    /**
-     * This function may be defined by user
-     */
-    public dblClick: ((e: MouseEvent) => void) | null
-    /**
-     * This function may be defined by user
-     */
-    public move: (() => void) | null
-    /**
-     * This function may be defined by user
-     */
-    public enter: (() => void) | null
-    /**
-     * This function may be defined by user
-     */
-    public leave: (() => void) | null
+  private _canvas: HTMLCanvasElement
+  private _x: number
+  private _y: number
+  private _px: number
+  private _py: number
+  private readonly _pos: Vector
+  private readonly _ppos: Vector
+  /**
+   * Returns `true` if any of the mouse buttons is pressed.
+   */
+  public isPressed: boolean
+  /**
+   *  Returns button number.
+   */
+  public button: number | null
+  /**
+   * This function may be defined by user
+   */
+  public wheel: ((e: WheelEvent) => void) | null
+  /**
+   * This function may be defined by user
+   */
+  public down: ((e: MouseEvent) => void) | null
+  /**
+   * This function may be defined by user
+   */
+  public up: ((e: MouseEvent) => void) | null
+  /**
+   * This function may be defined by user
+   */
+  public click: ((e: MouseEvent) => void) | null
+  /**
+   * This function may be defined by user
+   */
+  public dblClick: ((e: MouseEvent) => void) | null
+  /**
+   * This function may be defined by user
+   */
+  public move: (() => void) | null
+  /**
+   * This function may be defined by user
+   */
+  public enter: (() => void) | null
+  /**
+   * This function may be defined by user
+   */
+  public leave: (() => void) | null
 
-    constructor(canvas: HTMLCanvasElement) {
-        this._canvas = canvas
-        this._x = 0
-        this._y = 0
-        this._px = 0
-        this._py = 0
-        this._pos = new Vector(0, 0)
-        this._ppos = new Vector(0, 0)
+  constructor(canvas: HTMLCanvasElement) {
+    this._canvas = canvas
+    this._x = 0
+    this._y = 0
+    this._px = 0
+    this._py = 0
+    this._pos = new Vector(0, 0)
+
+    this._ppos = new Vector(0, 0)
+    this.isPressed = false
+    this.button = null
+    this.wheel = null
+    this.down = null
+    this.up = null
+    this.click = null
+    this.dblClick = null
+    this.move = null
+    this.enter = null
+    this.leave = null
+
+    this._canvas.addEventListener('mousemove', (e: MouseEvent) => {
+      this._updateMousePos(canvas, e)
+      if (this.move) this.move()
+    })
+    this._canvas.addEventListener('wheel', (e: WheelEvent) => {
+      this._updateMousePos(canvas, e)
+      if (this.wheel != null) {
+        this.wheel(e)
+      }
+    })
+    this._canvas.addEventListener(
+      'mousedown',
+      (e: MouseEvent) => {
+        this.isPressed = true
+        this.button = e.button
+        if (this.down != null) {
+          this.down(e)
+        }
+      },
+      false
+    )
+    this._canvas.addEventListener(
+      'mouseup',
+      (e: MouseEvent) => {
         this.isPressed = false
         this.button = null
-        this.wheel = null
-        this.down = null
-        this.up = null
-        this.click = null
-        this.dblClick = null
-        this.move = null
-        this.enter = null
-        this.leave = null
+        if (this.up != null) {
+          this.up(e)
+        }
+      },
+      false
+    )
+    this._canvas.addEventListener(
+      'click',
+      (e: MouseEvent) => {
+        if (this.click != null) {
+          this.click(e)
+        }
+      },
+      false
+    )
+    this._canvas.addEventListener(
+      'dblclick',
+      (e: MouseEvent) => {
+        if (this.dblClick != null) {
+          this.dblClick(e)
+        }
+      },
+      false
+    )
+    this._canvas.addEventListener('mouseenter', () => {
+      if (typeof this.enter === 'function') this.enter()
+    })
+    this._canvas.addEventListener('mouseleave', () => {
+      if (typeof this.leave === 'function') this.leave()
+    })
+  }
 
-        this._canvas.addEventListener('mousemove', (e: MouseEvent) => {
-            this._updateMousePos(canvas, e)
-            if (this.move) this.move()
-        })
-        this._canvas.addEventListener('wheel', (e: WheelEvent) => {
-            this._updateMousePos(canvas, e)
-            if (this.wheel != null) {
-                this.wheel(e)
-            }
-        })
-        this._canvas.addEventListener('mousedown', (e: MouseEvent) => {
-            this.isPressed = true
-            this.button = e.button
-            if (this.down != null) {
-                this.down(e)
-            }
-        }, false)
-        this._canvas.addEventListener('mouseup', (e: MouseEvent) => {
-            this.isPressed = false
-            this.button = null
-            if (this.up != null) {
-                this.up(e)
-            }
-        }, false)
-        this._canvas.addEventListener('click', (e: MouseEvent) => {
-            if (this.click != null) {
-                this.click(e)
-            }
-        }, false)
-        this._canvas.addEventListener('dblclick', (e: MouseEvent) => {
-            if (this.dblClick != null) {
-                this.dblClick(e)
-            }
-        }, false)
-        this._canvas.addEventListener('mouseenter', () => {
-            if (typeof this.enter === 'function') this.enter()
-        })
-        this._canvas.addEventListener('mouseleave', () => {
-            if (typeof this.leave === 'function') this.leave()
-        })
-    }
+  private _updateMousePos(canvas: HTMLCanvasElement, e: MouseEvent) {
+    this._px = this._x
+    this._py = this._y
+    this._ppos.set(this._px, this._py)
+    const bbox = canvas.getBoundingClientRect()
+    this._x = abs(round(e.clientX - bbox.left))
+    this._y = abs(round(e.clientY - bbox.top))
+    this._pos.set(this._x, this._y)
+  }
 
-    private _updateMousePos(canvas: HTMLCanvasElement, e: MouseEvent) {
-        this._px = this._x
-        this._py = this._y
-        this._ppos.set(this._px, this._py)
-        let bbox = canvas.getBoundingClientRect()
-        this._x = abs(round(e.clientX - bbox.left))
-        this._y = abs(round(e.clientY - bbox.top))
-        this._pos.set(this._x, this._y)
-    }
+  /**
+   * Current mouse `X` position.
+   */
+  get x() {
+    return this._x
+  }
 
-    /**
-     * Current mouse `X` position.
-     */
-    get x() {
-        return this._x
-    }
+  /**
+   * Current mouse `Y` position.
+   */
+  get y() {
+    return this._y
+  }
 
-    /**
-     * Current mouse `Y` position.
-     */
-    get y() {
-        return this._y
-    }
+  /**
+   * Previous mouse `X` position.
+   */
+  get px() {
+    return this._px
+  }
 
-    /**
-     * Previous mouse `X` position.
-     */
-    get px() {
-        return this._px
-    }
+  /**
+   * Previous mouse `Y` position.
+   */
+  get py() {
+    return this._py
+  }
 
-    /**
-     * Previous mouse `Y` position.
-     */
-    get py() {
-        return this._py
-    }
+  get pos() {
+    return this._pos
+  }
 
-    get pos() {
-        return this._pos
-    }
-
-    get ppos() {
-        return this._ppos
-    }
+  get ppos() {
+    return this._ppos
+  }
 }
 
 /**
@@ -305,7 +321,7 @@ export class Mouse {
  *     randomInt,
  *     resizeCanvas,
  *     text
- * } from 'limeviz'
+ * } from 'main'
  *
  * dvaStart(setup, draw, events)
  *
@@ -336,86 +352,86 @@ export class Mouse {
  * ```
  */
 export class AnimationCtrl {
-    private _fps: number
-    private _delay: number
-    private _time: number | null
-    private readonly _step: (x: number) => void
-    private _reqAF: number
-    /**
-     * Animation counter (contains the current frame number.)
-     */
-    public currentFrame: number
-    /**
-     * Returns `true` if the animation is running. Otherwise, returns `false`.
-     */
-    public isAnimating: boolean
+  private _fps: number
+  private _delay: number
+  private _time: number | null
+  private readonly _step: (x: number) => void
+  private _reqAF: number
+  /**
+   * Animation counter (contains the current frame number.)
+   */
+  public currentFrame: number
+  /**
+   * Returns `true` if the animation is running. Otherwise, returns `false`.
+   */
+  public isAnimating: boolean
 
-    /**
-     *
-     * @param callback Function which is called continuously with a given frequency.
-     * In case of predefined {@link animation} variable, it is the {@link UserFunc | user defined function} `draw`.
-     */
-    constructor(callback: () => void) {
-        this._fps = 60
-        this._delay = 1000 / this._fps
-        this.currentFrame = 0
-        this._time = null
-        this._reqAF = 0
+  /**
+   *
+   * @param callback Function which is called continuously with a given frequency.
+   * In case of predefined {@link animation} variable, it is the {@link UserFunc | user defined function} `draw`.
+   */
+  constructor(callback: () => void) {
+    this._fps = 60
+    this._delay = 1000 / this._fps
+    this.currentFrame = 0
+    this._time = null
+    this._reqAF = 0
 
-        this._step = (timestamp: number) => {
-            if (this._time == null) this._time = timestamp
-            let seg = floor((timestamp - this._time) / this._delay)
-            if (seg > this.currentFrame) {
-                // this.currentFrame = seg;
-                this.currentFrame++
-                callback()
-            }
-            if (this.isAnimating) {
-                this._reqAF = requestAnimationFrame(this._step)
-            }
-        }
-
-        this.isAnimating = false
+    this._step = (timestamp: number) => {
+      if (this._time == null) this._time = timestamp
+      const seg = floor((timestamp - this._time) / this._delay)
+      if (seg > this.currentFrame) {
+        // this.currentFrame = seg;
+        this.currentFrame++
+        callback()
+      }
+      if (this.isAnimating) {
+        this._reqAF = requestAnimationFrame(this._step)
+      }
     }
 
-    /**
-     * Starts the animation.
-     */
-    start(): void {
-        if (!this.isAnimating) {
-            this.isAnimating = true
-            this._reqAF = requestAnimationFrame(this._step)
-        }
-    }
+    this.isAnimating = false
+  }
 
-    /**
-     * Stops the animation.
-     */
-    stop(): void {
-        if (this.isAnimating) {
-            this._reqAF = requestAnimationFrame(this._step)
-            cancelAnimationFrame(this._reqAF)
-            this.isAnimating = false
-        }
+  /**
+   * Starts the animation.
+   */
+  start(): void {
+    if (!this.isAnimating) {
+      this.isAnimating = true
+      this._reqAF = requestAnimationFrame(this._step)
     }
+  }
 
-    /**
-     * Used for setting the new animation rate or reading the current one. The default value is 60 fps.
-     */
-    public get fps() {
-        if (this.isAnimating) {
-            return this._fps
-        } else {
-            return 0
-        }
+  /**
+   * Stops the animation.
+   */
+  stop(): void {
+    if (this.isAnimating) {
+      this._reqAF = requestAnimationFrame(this._step)
+      cancelAnimationFrame(this._reqAF)
+      this.isAnimating = false
     }
+  }
 
-    public set fps(v: number) {
-        this._fps = v
-        this._delay = 1000 / this._fps
-        this.currentFrame = 0
-        this._time = null
+  /**
+   * Used for setting the new animation rate or reading the current one. The default value is 60 fps.
+   */
+  public get fps() {
+    if (this.isAnimating) {
+      return this._fps
+    } else {
+      return 0
     }
+  }
+
+  public set fps(v: number) {
+    this._fps = v
+    this._delay = 1000 / this._fps
+    this.currentFrame = 0
+    this._time = null
+  }
 }
 
 export type LengthUnit = 'px' | 'pt' | 'pc' | 'in' | 'Q' | 'mm' | 'cm'
@@ -426,92 +442,92 @@ export type LengthUnit = 'px' | 'pt' | 'pc' | 'in' | 'Q' | 'mm' | 'cm'
  * or {@link selectCanvas} function is used.
  */
 export class DVA {
-    /**
-     * Current canvas 2D context.
-     */
-    public ctx: CanvasRenderingContext2D | null
-    /**
-     * HTML5 canvas element with the visualization.
-     */
-    public canvas: HTMLCanvasElement
-    /**
-     * Resolution of the canvas.
-     */
-    public dpi: number
-    /**
-     * If set to `true` the visualization is a still image.
-     */
-    public noLoop: boolean
-    /**
-     * Defines if the shape has a fill property.
-     */
-    public withFill: boolean
-    /**
-     * Defines if the shape has a stroke property.
-     */
-    public withStroke: boolean
-    /**
-     * Defines current fill color or gradient.
-     */
-    public currentFill: string | CanvasGradient
-    /**
-     * Defines current stroke color.
-     */
-    public currentStroke: string
-    /**
-     * Defines current font style.
-     */
-    public fontStyle: string
-    /**
-     * Defines current font weight.
-     */
-    public fontWeight: string
-    /**
-     * Defines current font size.
-     */
-    public fontSize: number
-    /**
-     * Defines which unit is used for the font sizing.
-     */
-    public fontUnit: LengthUnit
-    /**
-     * Defines current font family.
-     */
-    public fontFamily: string
-    /**
-     * Defines current text line height.
-     */
-    public lineHeight: number
-    /**
-     * Defines scale coefficient used for resolution adjustment.
-     */
-    public scaleCoefficient: number
+  /**
+   * Current canvas 2D context.
+   */
+  public ctx: CanvasRenderingContext2D | null
+  /**
+   * HTML5 canvas element with the visualization.
+   */
+  public canvas: HTMLCanvasElement
+  /**
+   * Resolution of the canvas.
+   */
+  public dpi: number
+  /**
+   * If set to `true` the visualization is a still image.
+   */
+  public noLoop: boolean
+  /**
+   * Defines if the shape has a fill property.
+   */
+  public withFill: boolean
+  /**
+   * Defines if the shape has a stroke property.
+   */
+  public withStroke: boolean
+  /**
+   * Defines current fill color or gradient.
+   */
+  public currentFill: string | CanvasGradient
+  /**
+   * Defines current stroke color.
+   */
+  public currentStroke: string
+  /**
+   * Defines current font style.
+   */
+  public fontStyle: string
+  /**
+   * Defines current font weight.
+   */
+  public fontWeight: string
+  /**
+   * Defines current font size.
+   */
+  public fontSize: number
+  /**
+   * Defines which unit is used for the font sizing.
+   */
+  public fontUnit: LengthUnit
+  /**
+   * Defines current font family.
+   */
+  public fontFamily: string
+  /**
+   * Defines current text line height.
+   */
+  public lineHeight: number
+  /**
+   * Defines scale coefficient used for resolution adjustment.
+   */
+  public scaleCoefficient: number
 
-    constructor(canvas: HTMLCanvasElement, noLoop = false) {
-        this.canvas = canvas
-        this.ctx = this.canvas.getContext('2d')
-        this.dpi = 300
-        this.noLoop = noLoop
-        this.withFill = true
-        this.withStroke = true
-        this.currentFill = '#65a30d'
-        this.currentStroke = '#44403c'
-        this.fontStyle = 'normal'
-        this.fontWeight = 'normal'
-        this.fontSize = 24
-        this.fontUnit = 'px'
-        this.fontFamily = 'sans-serif'
-        this.lineHeight = 1.1
-        this.scaleCoefficient = 1
-    }
+  constructor(canvas: HTMLCanvasElement, noLoop = false) {
+    this.canvas = canvas
+    this.ctx = this.canvas.getContext('2d')
+    this.dpi = 300
+    this.noLoop = noLoop
+    this.withFill = true
+    this.withStroke = true
+    this.currentFill = '#65a30d'
+    this.currentStroke = '#44403c'
+    this.fontStyle = 'normal'
+    this.fontWeight = 'normal'
+    this.fontSize = 24
+    this.fontUnit = 'px'
+    this.fontFamily = 'sans-serif'
+    this.lineHeight = 1.1
+    this.scaleCoefficient = 1
+  }
 
-    /**
-     * Commits shape on the canvas.
-     */
-    public commitShape() {
-        if (this.withFill && !!this.ctx) this.ctx.fill()
-        if (this.withStroke && !!this.ctx) this.ctx.stroke()
-    }
+  /**
+   * Commits shape on the canvas.
+   */
+  public commitShape() {
+    if (this.withFill && !!this.ctx) this.ctx.fill()
+    if (this.withStroke && !!this.ctx) this.ctx.stroke()
+  }
 }
 
 // Global variables
@@ -551,19 +567,49 @@ export let assets: AssetsObject
  */
 export let dva: DVA
 
-export type CursorType = ('auto' | 'default' | 'none' | 'context-menu' | 'help' |
-    'pointer' | 'progress' | 'wait' | 'cell' | 'crosshair' | 'text' | 'vertical-text' |
-    'alias' | 'copy' | 'move' | 'no-drop' | 'not-allowed' | 'grab' | 'grabbing' |
-    'all-scroll' | 'col-resize' | 'n-resize' | 'e-resize' | 's-resize' | 'w-resize' |
-    'ne-resize' | 'nw-resize' | 'se-resize' | 'sw-resize' | 'ew-resize' | 'ns-resize' |
-    'nesw-resize' | 'nwse-resize' | 'zoom-in' | 'zoom-out')
+export type CursorType =
+  | 'auto'
+  | 'default'
+  | 'none'
+  | 'context-menu'
+  | 'help'
+  | 'pointer'
+  | 'progress'
+  | 'wait'
+  | 'cell'
+  | 'crosshair'
+  | 'text'
+  | 'vertical-text'
+  | 'alias'
+  | 'copy'
+  | 'move'
+  | 'no-drop'
+  | 'not-allowed'
+  | 'grab'
+  | 'grabbing'
+  | 'all-scroll'
+  | 'col-resize'
+  | 'n-resize'
+  | 'e-resize'
+  | 's-resize'
+  | 'w-resize'
+  | 'ne-resize'
+  | 'nw-resize'
+  | 'se-resize'
+  | 'sw-resize'
+  | 'ew-resize'
+  | 'ns-resize'
+  | 'nesw-resize'
+  | 'nwse-resize'
+  | 'zoom-in'
+  | 'zoom-out'
 
 /**
  * This function changes the cursor type.
  * @param display
  */
 export function cursor(display: CursorType): void {
-    if (!!dva.canvas) dva.canvas.style.cursor = display
+  if (dva.canvas) dva.canvas.style.cursor = display
 }
 
 /**
@@ -574,27 +620,27 @@ export function cursor(display: CursorType): void {
  * @param v
  */
 export function scaleModifier(v: number) {
-    if (!!dva) {
-        dva.scaleCoefficient = v
-    }
+  if (dva) {
+    dva.scaleCoefficient = v
+  }
 }
 
 function setContextDefault(): void {
-    if (!!dva.canvas) {
-        dva.ctx = dva.canvas.getContext('2d')
-        let pxRatio = window.devicePixelRatio || 1
-        pxRatio *= dva.scaleCoefficient
-        dva.canvas.width = dva.canvas.clientWidth * pxRatio || 300
-        dva.canvas.height = dva.canvas.clientHeight * pxRatio || 150
-        width = dva.canvas.clientWidth || 300
-        height = dva.canvas.clientHeight || 150
-        if (!!dva.ctx) {
-            dva.ctx.scale(pxRatio, pxRatio)
-            dva.ctx.fillStyle = dva.currentFill
-            dva.ctx.strokeStyle = dva.currentStroke
-            setFont()
-        }
+  if (dva.canvas) {
+    dva.ctx = dva.canvas.getContext('2d')
+    let pxRatio = window.devicePixelRatio || 1
+    pxRatio *= dva.scaleCoefficient
+    dva.canvas.width = dva.canvas.clientWidth * pxRatio || 300
+    dva.canvas.height = dva.canvas.clientHeight * pxRatio || 150
+    width = dva.canvas.clientWidth || 300
+    height = dva.canvas.clientHeight || 150
+    if (dva.ctx) {
+      dva.ctx.scale(pxRatio, pxRatio)
+      dva.ctx.fillStyle = dva.currentFill
+      dva.ctx.strokeStyle = dva.currentStroke
+      setFont()
     }
+  }
 }
 
 export type UserFunc = (() => void) | null
@@ -626,38 +672,42 @@ export type UserFunc = (() => void) | null
  * ```
  * @param loadAssets Function defined by user for assets preloading.
  */
-export function dvaStart(setup?: UserFunc, draw?: UserFunc,
-                         events?: UserFunc, loadAssets?: UserFunc) {
-    assets = {}
-    if (typeof loadAssets == 'function') loadAssets()
-    if (assetList.length > 0) {
-        preloader.on('complete', onCompletePreloader) // on complete listener
-        preloader.load(assetList) // launch the loading process
-    } else {
-        lVrun(setup, draw, events)
-    }
+export function dvaStart(
+  setup?: UserFunc,
+  draw?: UserFunc,
+  events?: UserFunc,
+  loadAssets?: UserFunc
+) {
+  assets = {}
+  if (typeof loadAssets == 'function') loadAssets()
+  if (assetList.length > 0) {
+    preloader.on('complete', onCompletePreloader) // on complete listener
+    preloader.load(assetList) // launch the loading process
+  } else {
+    lVrun(setup, draw, events)
+  }
 
-    function onCompletePreloader(): void {
-        for (let a of assetList) {
-            assets[a.id] = preloader.getResult(a.id)
-        }
-        lVrun(setup, draw, events)
+  function onCompletePreloader(): void {
+    for (const a of assetList) {
+      assets[a.id] = preloader.getResult(a.id)
     }
+    lVrun(setup, draw, events)
+  }
 }
 
 function lVrun(setup?: UserFunc, draw?: UserFunc, events?: UserFunc) {
-    if (animation == undefined) {
-        animation = new AnimationCtrl(() => {
-            if (draw != undefined) draw()
-            if (dva.noLoop) animation.stop()
-        })
-    }
-    if (typeof setup == 'function') setup()
-    if (mouse == undefined) mouse = new Mouse(dva.canvas)
-    if (typeof events == 'function') {
-        events()
-    }
-    animation.start()
+  if (animation == undefined) {
+    animation = new AnimationCtrl(() => {
+      if (draw != undefined) draw()
+      if (dva.noLoop) animation.stop()
+    })
+  }
+  if (typeof setup == 'function') setup()
+  if (mouse == undefined) mouse = new Mouse(dva.canvas)
+  if (typeof events == 'function') {
+    events()
+  }
+  animation.start()
 }
 
 /**
@@ -666,12 +716,12 @@ function lVrun(setup?: UserFunc, draw?: UserFunc, events?: UserFunc) {
  * @param id Canvas id attribute.
  */
 export function createCanvas(target: HTMLElement, id?: string): void {
-    let cnv = document.createElement('canvas')
-    if (id !== undefined) cnv.id = id
-    if (keyboard == undefined) keyboard = new Keyboard(cnv)
-    if (dva == undefined) dva = new DVA(cnv)
-    target.appendChild(dva.canvas)
-    setContextDefault()
+  const cnv = document.createElement('canvas')
+  if (id !== undefined) cnv.id = id
+  if (keyboard == undefined) keyboard = new Keyboard(cnv)
+  if (dva == undefined) dva = new DVA(cnv)
+  target.appendChild(dva.canvas)
+  setContextDefault()
 }
 
 /**
@@ -680,10 +730,10 @@ export function createCanvas(target: HTMLElement, id?: string): void {
  * @param id Canvas id attribute.
  */
 export function selectCanvas(id: string): void {
-    let cnv = <HTMLCanvasElement>document.getElementById(id)
-    if (keyboard == undefined && !!cnv) keyboard = new Keyboard(cnv)
-    if (dva == undefined && !!cnv) dva = new DVA(cnv)
-    setContextDefault()
+  const cnv = <HTMLCanvasElement>document.getElementById(id)
+  if (keyboard == undefined && !!cnv) keyboard = new Keyboard(cnv)
+  if (dva == undefined && !!cnv) dva = new DVA(cnv)
+  setContextDefault()
 }
 
 /**
@@ -693,9 +743,9 @@ export function selectCanvas(id: string): void {
  * @param canvas Canvas element
  */
 export function resizeCanvas(w: number, h: number, canvas: HTMLCanvasElement = dva.canvas): void {
-    canvas.style.width = `${w}px`
-    canvas.style.height = `${h}px`
-    setContextDefault()
+  canvas.style.width = `${w}px`
+  canvas.style.height = `${h}px`
+  setContextDefault()
 }
 
 /* transformation */
@@ -706,7 +756,7 @@ export function resizeCanvas(w: number, h: number, canvas: HTMLCanvasElement = d
  * @param y Distance on vertical axis.
  */
 export function translate(x: number, y: number): void {
-    if (!!dva.ctx) dva.ctx.translate(x, y)
+  if (dva.ctx) dva.ctx.translate(x, y)
 }
 
 /**
@@ -715,7 +765,7 @@ export function translate(x: number, y: number): void {
  * @param angle Rotation angle in radians.
  */
 export function rotate(angle: number): void {
-    if (!!dva.ctx) dva.ctx.rotate(angle)
+  if (dva.ctx) dva.ctx.rotate(angle)
 }
 
 /**
@@ -725,7 +775,7 @@ export function rotate(angle: number): void {
  * @param y Vertical scale factor.
  */
 export function scale(x: number, y: number): void {
-    if (!!dva.ctx) dva.ctx.scale(x, y)
+  if (dva.ctx) dva.ctx.scale(x, y)
 }
 
 /**
@@ -735,7 +785,7 @@ export function scale(x: number, y: number): void {
  * textAlign and textBaseline.
  */
 export function save(): void {
-    if (!!dva.ctx) dva.ctx.save()
+  if (dva.ctx) dva.ctx.save()
 }
 
 /**
@@ -743,7 +793,7 @@ export function save(): void {
  * It restores the most recently saved canvas state with the {@link save} function. If there is no saved state, this method does nothing.
  */
 export function restore(): void {
-    if (!!dva.ctx) dva.ctx.restore()
+  if (dva.ctx) dva.ctx.restore()
 }
 
 /**
@@ -752,14 +802,14 @@ export function restore(): void {
  * This function can be called **only** after canvas is selected or created.
  */
 export function staticDrawing(): void {
-    dva.noLoop = true
+  dva.noLoop = true
 }
 
 /**
  * This function returns the current canvas element.
  */
 export function canvas(): HTMLCanvasElement | undefined {
-    if (!!dva.canvas) {
-        return dva.canvas
-    }
+  if (dva.canvas) {
+    return dva.canvas
+  }
 }
