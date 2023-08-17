@@ -1,6 +1,10 @@
 {
-  "name": "dvalib",
+  "name": "@marepilc/dvalib",
   "version": "0.0.1",
+  "repository": "https://github.com/marepilc/dvalib.git",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "description": "Data Vizualization Library",
   "main": "dist/index.js",
   "scripts": {
