@@ -1,0 +1,27 @@
+{
+  "name": "dvalib",
+  "version": "0.0.1",
+  "description": "Data Vizualization Library",
+  "main": "dist/index.js",
+  "scripts": {
+    "tsc": "tsc",
+    "typedoc": "typedoc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "DataViz",
+    "Data",
+    "Vizualization",
+    "Artisan",
+    "Chart",
+    "Graph",
+    "Canvas",
+    "DataViz Artisan"
+  ],
+  "author": "Marek Pilczuk",
+  "license": "MIT",
+  "devDependencies": {
+    "typedoc": "^0.24.8",
+    "typescript": "^5.1.6"
+  }
+}
