@@ -560,55 +560,18 @@ export let animation: AnimationCtrl
 /**
  * An object that contains all the assets loaded with the {@link loadAssets} function.
  */
-export let assets: AssetsObject
+export let assets: AssetsObject<unknown>
 
 /**
  * A global variable that contains the instance of the {@link DVA} class.
  */
 export let dva: DVA
 
-export type CursorType =
-  | 'auto'
-  | 'default'
-  | 'none'
-  | 'context-menu'
-  | 'help'
-  | 'pointer'
-  | 'progress'
-  | 'wait'
-  | 'cell'
-  | 'crosshair'
-  | 'text'
-  | 'vertical-text'
-  | 'alias'
-  | 'copy'
-  | 'move'
-  | 'no-drop'
-  | 'not-allowed'
-  | 'grab'
-  | 'grabbing'
-  | 'all-scroll'
-  | 'col-resize'
-  | 'n-resize'
-  | 'e-resize'
-  | 's-resize'
-  | 'w-resize'
-  | 'ne-resize'
-  | 'nw-resize'
-  | 'se-resize'
-  | 'sw-resize'
-  | 'ew-resize'
-  | 'ns-resize'
-  | 'nesw-resize'
-  | 'nwse-resize'
-  | 'zoom-in'
-  | 'zoom-out'
-
 /**
  * This function changes the cursor type.
  * @param display
  */
-export function cursor(display: CursorType): void {
+export function cursor(display: CSSStyleDeclaration['cursor']): void {
   if (dva.canvas) dva.canvas.style.cursor = display
 }
 

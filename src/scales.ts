@@ -36,13 +36,13 @@ export function linearScale(
  * @param resultMax Maximum of the mapped result.
  */
 export function ordinalScale(
-  d: any[],
+  d: (number | string | Date)[],
   padding: number,
   resultMin: number,
   resultMax: number
 ): (x: number) => number {
   const result: number[] = []
-  let scale: any
+  let scale: (x: number) => number
   if (d.length > 1) {
     scale = linearScale(0, d.length - 1, resultMin + padding, resultMax - padding)
   } else {

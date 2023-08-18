@@ -1,7 +1,7 @@
 'use strict'
 
-export interface AssetsObject {
-  [key: string]: any
+export interface AssetsObject<T> {
+  [key: string]: T
 }
 
 export interface AssetsItem {
@@ -18,23 +18,21 @@ export const assetList: AssetsItem[] = []
  * User should not to use this class directly. It is use by the `LimeViz` library
  * behind the scene, when {@link loadAssets} and {@link addAsset} functions are used.
  */
+type CallbackFunction = () => void
+type RequestCallback = (response: Blob | string) => void
+
+interface Asset {
+  id: string
+  src: string
+}
+
 export class Preloader {
-  public assets: any
-  public onProgress: () => void
-  public onComplete: () => void
-  public loadingProgress: number
-  public loadAssets: any
+  public assets: Record<string, Blob | string | HTMLImageElement> = {}
+  public onProgress: CallbackFunction = () => {}
+  public onComplete: CallbackFunction = () => {}
+  public loadingProgress = 0
 
-  constructor() {
-    this.assets = {}
-
-    this.onProgress = () => {}
-    this.onComplete = () => {}
-
-    this.loadingProgress = 0
-  }
-
-  on(eventName: string, callbackFunction: () => void) {
+  on(eventName: 'progress' | 'complete', callbackFunction: CallbackFunction) {
     switch (eventName) {
       case 'progress':
         this.onProgress = callbackFunction
@@ -45,85 +43,68 @@ export class Preloader {
     }
   }
 
-  load(assets: any[]) {
-    const total: number = assets.length
-
-    let loaded: number = 0
+  load(assets: Asset[]) {
+    const total = assets.length
+    let loaded = 0
 
     const onFinishedLoading = () => {
       loaded++
-
       this.loadingProgress = loaded / total
-      if (loaded == total) {
+      if (loaded === total) {
         this.onComplete()
       }
     }
-    this.loadingProgress = 0
-    for (let count = 0; count < total; count++) {
-      const id = assets[count].id
-      const src = assets[count].src
 
-      const type = src.split('.').pop()
+    this.loadingProgress = 0
+
+    assets.forEach((asset) => {
+      const type = asset.src.split('.').pop()
 
       switch (type) {
         case 'svg':
         case 'png':
         case 'jpg':
         case 'jpeg':
-          this.loadImg(id, src, onFinishedLoading)
+          this.loadImg(asset.id, asset.src, onFinishedLoading)
           break
 
-        // JSON files.
         case 'json':
-          this.loadJson(id, src, onFinishedLoading)
+          this.loadJson(asset.id, asset.src, onFinishedLoading)
           break
 
-        // Default case for unsupported file types.
         default:
           onFinishedLoading()
           break
       }
-    }
+    })
   }
 
-  loadJson(id: string, src: string, callback: () => void) {
-    this.request(src, 'json', (response) => {
-      this.assets[id] = response
-
+  loadJson(id: string, src: string, callback: CallbackFunction) {
+    this.request(src, 'text', (response) => {
+      this.assets[id] = response as string
       callback()
     })
   }
 
-  loadImg(id: string, src: string, callback: () => void) {
+  loadImg(id: string, src: string, callback: CallbackFunction) {
     this.request(src, 'blob', (response) => {
       const img = new Image()
-
-      img.src = URL.createObjectURL(response)
-
+      img.src = URL.createObjectURL(response as Blob)
       this.assets[id] = img
-
       img.onload = callback
     })
   }
 
-  request(src: string, type: XMLHttpRequestResponseType, callback: (response: any) => void) {
+  request(src: string, type: XMLHttpRequestResponseType, callback: RequestCallback) {
     const xhrObj = new XMLHttpRequest()
-
-    xhrObj.onload = () => {
-      callback(xhrObj.response)
-    }
-
+    xhrObj.onload = () => callback(xhrObj.response)
     xhrObj.open('get', src, true)
     xhrObj.responseType = type
     xhrObj.send()
   }
 
-  getResult(id: string) {
-    if (typeof this.assets[id] !== 'undefined') {
-      return this.assets[id]
-    } else {
-      return null
-    }
+  getResult(id: string): Blob | string | HTMLImageElement | null {
+    return this.assets[id] ?? null
   }
 }
 

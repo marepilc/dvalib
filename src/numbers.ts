@@ -145,7 +145,7 @@ export function randomInt(a: number, b: number): number {
   return Math.floor(Math.random() * (Math.max(a, b) - Math.min(a, b) + 1)) + Math.min(a, b)
 }
 
-export function choose(items: any[]): any {
+export function choose<T>(items: T[]): T {
   return items[randomInt(0, items.length - 1)]
 }
 
@@ -163,7 +163,7 @@ export function random(...args: number[]): number {
  * This function shuffles the array.
  * @param items An array of items to shuffle.
  */
-export function shuffle(items: any[]): void {
+export function shuffle<T>(items: T[]): void {
   let j, x
   for (let i = items.length - 1; i > 0; i--) {
     j = Math.floor(Math.random() * (i + 1))
@@ -207,7 +207,7 @@ export function desc(a: number, b: number): number {
  * This function returns sorted array of unique elements.
  * @param items An array of items.
  */
-export function unique(items: any[]): any[] {
+export function unique<T>(items: T[]): T[] {
   return items
     .filter((value, index, self) => {
       return self.indexOf(value) === index
